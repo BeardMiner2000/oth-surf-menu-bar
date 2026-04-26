@@ -1,6 +1,6 @@
 {
   "name": "oth-surf-menu-bar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "oth.surf macOS menu bar application",
   "main": "src/main.js",
   "scripts": {
