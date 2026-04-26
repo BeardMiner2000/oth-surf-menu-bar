@@ -1,6 +1,5 @@
 # Dependencies
 node_modules/
-package-lock.json
 
 # Build outputs
 dist/
@@ -26,9 +25,6 @@ build/
 # Logs
 logs/
 *.log
-
-# Render
-render.yaml
 
 # Test files
 test/

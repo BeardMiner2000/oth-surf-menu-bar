@@ -30,13 +30,8 @@ let currentDay = 'TODAY';
 let surfData = null;
 let lastUpdated = '';
 
-// API URL (will be set to localhost in dev, Render URL in prod)
-let API_URL = 'http://localhost:3001';
-
-// Update API URL from environment
-if (process.env.RENDER_EXTERNAL_URL) {
-  API_URL = process.env.RENDER_EXTERNAL_URL.replace('/dashboard', '/api');
-}
+// API URL for the backend. Override with OTH_SURF_API_URL for local testing.
+const API_URL = process.env.OTH_SURF_API_URL || 'https://oth-surf-scraper.onrender.com';
 
 // Fetch surf data from API
 async function fetchSurfData(day) {
