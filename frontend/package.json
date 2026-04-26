@@ -18,6 +18,7 @@
     ],
     "mac": {
       "category": "public.app-category.weather",
+      "icon": "resources/icon.icns",
       "target": [
         "dmg"
       ]
