@@ -3,18 +3,18 @@ services:
     name: oth-surf-scraper
     env: node
     region: oregon
+    repo: https://github.com/BeardMiner2000/oth-surf-menu-bar
     branch: main
     rootDir: backend
     buildCommand: npm install
     startCommand: npm start
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
       - key: OTH_SURF_URL
-        sync: false
         value: https://oth.surf
       - key: PUPPETEER_ARGS
-        sync: false
         value: --no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage
