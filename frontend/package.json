@@ -16,6 +16,12 @@
       "src/index.html",
       "package.json"
     ],
+    "extraResources": [
+      {
+        "from": "resources/trayTemplate.png",
+        "to": "trayTemplate.png"
+      }
+    ],
     "mac": {
       "category": "public.app-category.weather",
       "icon": "resources/icon.icns",
