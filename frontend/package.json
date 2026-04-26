@@ -1,14 +1,34 @@
 {
-  "name": "oth-surf-menus",
+  "name": "oth-surf-menu-bar",
   "version": "1.0.0",
   "description": "oth.surf macOS menu bar application",
-  "main": "dist/index.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "node src/index.js",
-    "build": "tsc && cp ../backend/src/scraper.js dist/",
-    "package": "bash build-dmg.sh"
+    "start": "electron .",
+    "build": "node --check src/main.js",
+    "package": "npm run build && electron-builder --mac dmg --publish never"
+  },
+  "build": {
+    "appId": "com.othsurf.menubar",
+    "productName": "OTH SURF",
+    "files": [
+      "src/main.js",
+      "src/index.html",
+      "package.json"
+    ],
+    "mac": {
+      "category": "public.app-category.weather",
+      "target": [
+        "dmg"
+      ]
+    },
+    "dmg": {
+      "artifactName": "OTH SURF-v${version}.${ext}"
+    }
   },
   "devDependencies": {
+    "electron": "^41.3.0",
+    "electron-builder": "^26.8.1",
     "typescript": "^5.3.0"
   },
   "dependencies": {

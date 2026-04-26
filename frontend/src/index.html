@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self' https://oth-surf-scraper.onrender.com http://localhost:3001; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src https://oth-surf-scraper.onrender.com http://localhost:3001;"
+  >
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OTH SURF</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #1a1a2e;
+      --panel: #26263d;
+      --panel-2: #30304a;
+      --text: #f2f2f4;
+      --muted: #a7a7b8;
+      --accent: #ff6b35;
+      --green: #00d4aa;
+      --border: #3d3d59;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 18px;
+    }
+
+    .banner {
+      margin-bottom: 16px;
+      padding: 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin-top: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav {
+      display: grid;
+      grid-template-columns: 44px 1fr 44px;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    button {
+      height: 34px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--accent);
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+
+    .day {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--panel);
+      padding: 16px;
+    }
+
+    .stoke {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 14px;
+      border-radius: 6px;
+      background: #222239;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .score {
+      color: var(--green);
+      font-size: 34px;
+      font-weight: 900;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      min-height: 70px;
+      padding: 10px 8px;
+      border-radius: 6px;
+      background: var(--panel-2);
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 6px;
+      color: var(--green);
+      font-size: 13px;
+      line-height: 1.2;
+      overflow-wrap: anywhere;
+    }
+
+    .note {
+      margin-bottom: 12px;
+      padding: 12px;
+      border-radius: 6px;
+      background: #222239;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .conditions {
+      display: grid;
+      gap: 8px;
+      margin: 0 0 12px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .condition {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 6px;
+      background: var(--panel-2);
+      font-size: 12px;
+    }
+
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .link-button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0 10px;
+      font-size: 11px;
+    }
+
+    .state {
+      padding: 48px 16px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="banner">
+      <h1>Over The Hill // Bolinas</h1>
+      <div class="subtitle" id="subtitle">LONGBOARD REPORT</div>
+    </div>
+
+    <div class="nav">
+      <button id="prev" title="Previous day">&lt;</button>
+      <div class="day" id="day">TODAY</div>
+      <button id="next" title="Next day">&gt;</button>
+    </div>
+
+    <main class="panel" id="content">
+      <div class="state">Loading surf report...</div>
+    </main>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const API_URL = params.get('api') || 'https://oth-surf-scraper.onrender.com';
+    const days = ['TODAY', 'FRIDAY', 'SATURDAY', 'SUNDAY', 'MONDAY'];
+
+    let activeIndex = 0;
+    let surfData = null;
+
+    const content = document.getElementById('content');
+    const dayEl = document.getElementById('day');
+    const subtitle = document.getElementById('subtitle');
+    const prev = document.getElementById('prev');
+    const next = document.getElementById('next');
+
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[char]);
+    }
+
+    function activeDay() {
+      return days[activeIndex];
+    }
+
+    function forecastForDay() {
+      if (!surfData || !Array.isArray(surfData.forecast)) return null;
+      return surfData.forecast.find((item) => item.day === activeDay()) || surfData.forecast[0];
+    }
+
+    function render() {
+      dayEl.textContent = activeDay();
+      subtitle.textContent = `${activeDay()} LONGBOARD REPORT`;
+      prev.disabled = activeIndex === 0;
+      next.disabled = activeIndex === days.length - 1;
+
+      const forecast = forecastForDay();
+      if (!forecast) {
+        content.innerHTML = '<div class="state">No surf report data available.</div>';
+        return;
+      }
+
+      const updated = new Date(surfData.timestamp || Date.now()).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const conditions = Array.isArray(forecast.conditions) ? forecast.conditions : [];
+      const conditionHtml = conditions.map((condition) => `
+        <li class="condition">
+          <span>${escapeHtml(condition.label || condition.name || 'Condition')}</span>
+          <strong>${escapeHtml(condition.value || '')}</strong>
+        </li>
+      `).join('');
+
+      content.innerHTML = `
+        <section class="stoke">
+          <div>
+            <div class="label">Stoke meter</div>
+            <div>${escapeHtml(forecast.date || '')}</div>
+          </div>
+          <div class="score">${escapeHtml(forecast.stoke || 0)}%</div>
+        </section>
+
+        <section class="metrics">
+          <div class="metric">
+            <span class="label">Waves</span>
+            <strong>${escapeHtml(forecast.waveHeight || 'n/a')}</strong>
+          </div>
+          <div class="metric">
+            <span class="label">Tide</span>
+            <strong>${escapeHtml(forecast.tideRange || 'n/a')}</strong>
+          </div>
+          <div class="metric">
+            <span class="label">Slot</span>
+            <strong>${escapeHtml(forecast.bestSlot || 'n/a')}</strong>
+          </div>
+        </section>
+
+        <section class="note">
+          <div class="label">JL thinks</div>
+          <div>${escapeHtml(forecast.description || 'No note available.')}</div>
+        </section>
+
+        ${conditionHtml ? `<ul class="conditions">${conditionHtml}</ul>` : ''}
+
+        <footer class="footer">
+          <span>Updated ${updated}</span>
+          <button class="link-button" id="dashboard">oth.surf</button>
+        </footer>
+      `;
+
+      document.getElementById('dashboard')?.addEventListener('click', () => {
+        window.open('https://oth.surf', '_blank');
+      });
+    }
+
+    async function refresh() {
+      content.innerHTML = '<div class="state">Loading surf report...</div>';
+      try {
+        const response = await fetch(`${API_URL}/api/surf`);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        surfData = await response.json();
+        render();
+      } catch (error) {
+        content.innerHTML = `<div class="state">Could not load surf report.<br>${escapeHtml(error.message)}</div>`;
+      }
+    }
+
+    prev.addEventListener('click', () => {
+      activeIndex = Math.max(0, activeIndex - 1);
+      render();
+    });
+
+    next.addEventListener('click', () => {
+      activeIndex = Math.min(days.length - 1, activeIndex + 1);
+      render();
+    });
+
+    refresh();
+    setInterval(refresh, 5 * 60 * 1000);
+  </script>
+</body>
+</html>
