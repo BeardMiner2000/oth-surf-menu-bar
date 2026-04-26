@@ -1,0 +1,18 @@
+{
+  "name": "oth-surf-menus",
+  "version": "1.0.0",
+  "description": "oth.surf macOS menu bar application",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "build": "tsc && cp ../backend/src/scraper.js dist/",
+    "package": "bash build-dmg.sh"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "menubar": "^5.2.3"
+  }
+}

@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: oth-surf-scraper
+    env: node
+    region: oregon
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: OTH_SURF_URL
+        sync: false
+        value: https://oth.surf
+      - key: PUPPETEER_ARGS
+        sync: false
+        value: --no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage

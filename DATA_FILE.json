@@ -1,0 +1,106 @@
+{
+  "timestamp": "2024-04-23T20:30:00.000Z",
+  "current": {
+    "day": "TODAY",
+    "stoke": 100,
+    "date": "APR 23",
+    "description": "Longboarders should stop texting their exes and go hit the water. It's time to reclaim our rightful place in the water.",
+    "waveHeight": "1-2 FT",
+    "tideRange": "0.5-4.2 FT",
+    "bestSlot": "9AM",
+    "conditions": [
+      "DAWN 1-2 FT NW",
+      "PATCH/CALL NW",
+      "DARK 1-2 FT NW",
+      "DAWN 2-3 FT SW",
+      "PATCH/CALL SW",
+      "DAWN 2-4 FT WNW",
+      "PATCH/CALL WNW",
+      "DARK 2-4 FT WNW",
+      "DAWN 3-5 FT WNW",
+      "PATCH/CALL WNW"
+    ]
+  },
+  "forecast": [
+    {
+      "day": "TODAY",
+      "date": "APR 23",
+      "stoke": 100,
+      "description": "Longboarders should stop texting their exes and go hit the water. It's time to reclaim our rightful place in the water.",
+      "waveHeight": "1-2 FT",
+      "tideRange": "0.5-4.2 FT",
+      "bestSlot": "9AM",
+      "conditions": [
+        "DAWN 1-2 FT NW",
+        "PATCH/CALL NW",
+        "DARK 1-2 FT NW"
+      ]
+    },
+    {
+      "day": "TOMORROW",
+      "date": "APR 24",
+      "stoke": 95,
+      "description": "The ocean has been waiting for you, and now it's finally your moment to shine. The waves are calling.",
+      "waveHeight": "2-3 FT",
+      "tideRange": "0.6-4.3 FT",
+      "bestSlot": "10AM",
+      "conditions": [
+        "DAWN 2-3 FT NW",
+        "PATCH/CALL NW",
+        "DARK 2-3 FT NW"
+      ]
+    },
+    {
+      "day": "DAY 3",
+      "date": "APR 25",
+      "stoke": 85,
+      "description": "Conditions are looking up. The waves are picking up and the tide is cooperating. Time to suit up.",
+      "waveHeight": "3-4 FT",
+      "tideRange": "0.7-4.4 FT",
+      "bestSlot": "11AM",
+      "conditions": [
+        "DAWN 2-4 FT NW",
+        "PATCH/CALL NW",
+        "DARK 3-4 FT NW"
+      ]
+    },
+    {
+      "day": "DAY 4",
+      "date": "APR 26",
+      "stoke": 75,
+      "description": "A solid day of surfing ahead. The waves are consistent and the tide is working in your favor.",
+      "waveHeight": "2-3 FT",
+      "tideRange": "0.8-4.5 FT",
+      "bestSlot": "9AM",
+      "conditions": [
+        "DAWN 2-3 FT NW",
+        "PATCH/CALL NW",
+        "DARK 2-3 FT NW"
+      ]
+    },
+    {
+      "day": "DAY 5",
+      "date": "APR 27",
+      "stoke": 65,
+      "description": "Conditions are decent but not spectacular. Still a good day to get out there if you're up for it.",
+      "waveHeight": "1-2 FT",
+      "tideRange": "0.9-4.6 FT",
+      "bestSlot": "10AM",
+      "conditions": [
+        "DAWN 1-2 FT NW",
+        "PATCH/CALL NW",
+        "DARK 1-2 FT NW"
+      ]
+    }
+  ],
+  "tide": {
+    "high": [
+      {"time": "3:49 AM", "height": "5.3 FT"},
+      {"time": "3:49 PM", "height": "5.4 FT"}
+    ],
+    "low": [
+      {"time": "11:06 AM", "height": "-0.6 FT"},
+      {"time": "11:06 PM", "height": "-0.5 FT"}
+    ]
+  }
+}
